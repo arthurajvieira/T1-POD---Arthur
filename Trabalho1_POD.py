@@ -1,3 +1,5 @@
+from abc import ABC, abstractmethod
+
 class Partido:
     def __init__(self, num, sigla, nome, cnpj): # nome max 50 carac cnpj max 14 num
         self.num = num
@@ -30,8 +32,9 @@ class Candidato(Eleitor): # -> conferir com class partido (def verificar candida
         self.numero = numero
         self.partido = partido
 
-    def verificar_candidato(self, numero): # assinatura de metodo
-        pass # conferir se sao 2 numeros = pref ou 5 = vereador ???
+    @abstractmethod
+    def verificar_candidato(self): # assinatura de metodo
+        pass
 
 class Prefeito(Candidato): # sub de candidato (cpf do vice e plano governo) // deve verificar o numero de partido class candid -> 2 digitos
     def __init__(self, nome, cpf, dat_nasc, titulo, zona, secao, numero, partido, cpf_vice, plano):
@@ -39,11 +42,23 @@ class Prefeito(Candidato): # sub de candidato (cpf do vice e plano governo) // d
         self.cpf_vice = cpf_vice
         self.plano = plano
 
+    def verificar_candidato(self):
+      if len(self.numero) == 2:
+        print("Candidato a prefeito válido!")
+      else:
+        raise ErroCadastro("Candidato para prefeito inválido!")
+
 class Vereador(Candidato): #  deve verificar o numero (num de partido da class candid.) -> 5 digitos
     def __init__(self, nome, cpf, dat_nasc, titulo, zona, secao, numero, partido, bairro, projeto_lei):
             super().__init__(nome, cpf, dat_nasc, titulo, zona, secao, numero, partido)
             self.bairro = bairro
             self.projeto_lei = projeto_lei
+
+    def verificar_candidato(self):
+      if len(self.numero) == 5:
+        print("Candidato a vereador válido!")
+      else:
+        raise ErroCadastro("Candidato para vereador inválido!")
 
 class Urna: # zona, secao, votos p prefeito, votos p vereador
     def __init__(self, zona, secao, votos_p, votos_v):
@@ -51,6 +66,9 @@ class Urna: # zona, secao, votos p prefeito, votos p vereador
         self.secao = secao
         self.votos_p = votos_p
         self.votos_v = votos_v
+
+    def __add__(self, votos_p, votos_v): # sobrecarga (?)
+      pass
 
 class Eleicao: # relatorio dos candidatos, numeros, nomes
     pass
@@ -60,7 +78,7 @@ class Eleicao: # relatorio dos candidatos, numeros, nomes
     def partidos(self): # total de partidos, para cada partido nome sigla e num cand a pref e veread
         pass
 
-    def urnas(self): 
+    def urnas(self):
         pass
 
     def resultado_geral(self): # nome pref vencedor (mais 50%), se nao, segundo turno, nome 10 vereadores maior quant votos e seu qntd de votos
