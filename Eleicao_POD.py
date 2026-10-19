@@ -262,6 +262,8 @@ class Eleicao:
     def urnas(self):
         with open("relatorio_urnas.txt", "w", encoding="utf-8") as arquivo:
             arquivo.write("RELATÓRIO DAS URNAS\n")
+
+            # tudo em string pra transformar o resultado numérico e poder contatenar e pro write conseguir usar
             for urna in Urna.urnas.values():
                 arquivo.write("\nZona " + urna.zona + " / Seção " + urna.secao + "\n")
                 arquivo.write("Prefeito - válidos: " + str(sum(urna.votos_prefeito.values())) +
@@ -270,8 +272,10 @@ class Eleicao:
                 arquivo.write("Vereador - válidos: " + str(sum(urna.votos_vereador.values())) +
                               ", brancos: " + str(urna.brancos_vereador) +
                               ", nulos: " + str(urna.nulos_vereador) + "\n")
+                
                 for numero, quantidade in urna.votos_prefeito.items():
                     arquivo.write("Prefeito " + numero + ": " + str(quantidade) + " votos\n")
+                    
                 for numero, quantidade in urna.votos_vereador.items():
                     arquivo.write("Vereador " + numero + ": " + str(quantidade) + " votos\n")
 
@@ -287,11 +291,15 @@ class Eleicao:
                 if numero not in votos_vereadores:
                     votos_vereadores[numero] = 0
                 votos_vereadores[numero] += quantidade
-
-        with open("relatorio_resultado.txt", "w", encoding="utf-8") as arquivo:
+                
+        # encoding pro python nao brigar com os caracteres do pt br
+        # w é o modo de escrita (tipo terminal linux)
+        
+        with open("relatorio_resultado.txt", "w", encoding="utf-8") as arquivo: 
             arquivo.write("RESULTADO GERAL\n")
             if votos_prefeitos:
-                ranking = sorted(votos_prefeitos, key=votos_prefeitos.get, reverse=True)
+                # sorted p ordenar do menor p maior, reverse pra pegar e deixar do mais votado pro menos, key pra mostrar a quantia de votos
+                ranking = sorted(votos_prefeitos, key=votos_prefeitos.get, reverse=True) 
                 numero = ranking[0]
                 quantidade = votos_prefeitos[numero]
                 total = sum(votos_prefeitos.values())
@@ -304,9 +312,11 @@ class Eleicao:
                     arquivo.write("Segundo turno necessário\n")
             else:
                 arquivo.write("Nenhum voto válido para prefeito\n")
+                
             arquivo.write("\n10 Vereadores mais votados!\n")
             ranking = sorted(votos_vereadores, key=votos_vereadores.get, reverse=True)
-            for numero in ranking[:10]:
+            
+            for numero in ranking[:10]: # os 10 mais votados, do 0 ao 9
                 quantidade = votos_vereadores[numero]
                 arquivo.write(Vereador.vereadores[numero].nome + " - " + str(quantidade) + " votos\n")
 
@@ -322,12 +332,16 @@ class Eleicao:
             arquivo.write("Erros de vereadores: " + str(Vereador.erro) + "\n")
             arquivo.write("Total: " + str(TotalErros.total_erros()) + "\n")
 
-
+# o r aqui é pra ler o arquivo e nao escrever <-
 arquivo = open("Partidos.txt", "r", encoding="utf-8")
+
 for linha in arquivo:
-    if linha.startswith("PARTIDO:"):
-        dados = linha.replace("PARTIDO:", "").strip().split(",")
+    if linha.startswith("PARTIDO:"): # se a linha começar com PARTIDO vai executar 
+        # replace vai tirar o partido (por causa dos dados do txt)
+        # split pra conseguir separar as informações bonitinhas ao invés de tudo em uma linha
+        dados = linha.replace("PARTIDO:", "").strip().split(",") 
         try:
+            # 0 [numero] / 1 [sigla] / 2 [nome partido] / 3 [cpf]
             Partido(dados[0], dados[1], dados[2], dados[3])
         except ErroCadastro:
             pass
