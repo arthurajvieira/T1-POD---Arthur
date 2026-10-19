@@ -120,6 +120,7 @@ class Vereador(Candidato): #  deve verificar o numero (num de partido da class c
         Eleitor.eleitores[self.cpf] = self
 
     def verificar_candidato(self):
+        # self.numero para verificar se os dois primeiros digitos correspondem ao partido
         if len(self.numero) != 5 or not self.numero.isdigit() or self.numero[:2] != self.partido:
             Vereador.erro += 1
             raise ErroCadastro("Número de vereador inválido")
@@ -306,6 +307,8 @@ class Eleicao:
                 arquivo.write("Mais votado: " + Prefeito.prefeitos[numero].nome + "\n")
                 arquivo.write("Votos: " + str(quantidade) + "\n")
                 arquivo.write("Percentual: " + str(round(quantidade / total * 100, 2)) + "%\n")
+
+                # vezes dois pq precisa saber se o candidato recebeu pelo menos metade dos votos válidos
                 if quantidade * 2 >= total:
                     arquivo.write("Prefeito eleito (regra do exercício)\n")
                 else:
