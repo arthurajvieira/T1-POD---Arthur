@@ -1,0 +1,26 @@
+Relatorio de Eleitores:Total: 387913
+Prefeitos: 27
+Vereadores: 226
+Zona 5: 67222 eleitores
+Zona 1: 74187 eleitores
+Zona 2: 66122 eleitores
+Zona 6: 53020 eleitores
+Zona 4: 69622 eleitores
+Zona 3: 57740 eleitores
+Zona 5 / Seção 1: 19391
+Zona 1 / Seção 3: 24179
+Zona 2 / Seção 3: 21077
+Zona 6 / Seção 2: 28320
+Zona 4 / Seção 2: 25898
+Zona 2 / Seção 1: 26250
+Zona 1 / Seção 1: 23032
+Zona 2 / Seção 2: 18795
+Zona 6 / Seção 1: 24700
+Zona 5 / Seção 2: 28257
+Zona 1 / Seção 2: 26976
+Zona 5 / Seção 3: 19574
+Zona 4 / Seção 3: 16722
+Zona 3 / Seção 1: 19661
+Zona 4 / Seção 1: 27002
+Zona 3 / Seção 3: 19372
+Zona 3 / Seção 2: 18707

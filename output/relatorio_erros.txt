@@ -1,0 +1,7 @@
+Relatorio de Erros
+Erros de partidos: 0
+Erros de eleitores: 0
+Erros de candidatos: 0
+Erros de prefeitos: 0
+Erros de vereadores: 0
+Total: 0
